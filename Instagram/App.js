@@ -1,24 +1,71 @@
-import { StatusBar } from 'expo-status-bar'
-import { StyleSheet, Text, View } from 'react-native'
-import OnbordingPage1 from './screens/onbording_page_1'
-import OnbordingPage2 from './screens/onbording_page_2'
-import OnbordingPage3 from './screens/onbording_page_3'
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import Home from "./components/screens/Home";
+import Search from "./components/screens/Search";
+import Reels from "./components/screens/Reels";
+import Activity from "./components/screens/Activity";
+import Profile from "./components/screens/Profile";
+import Ionic from "react-native-vector-icons/Ionicons";
 
-export default function App() {
+const App = () => {
+  const Stack = createNativeStackNavigator();
+
+  const Tab = createBottomTabNavigator();
+
+  const bottomTabScreen = () => {
+    return (
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+          tabBarHideOnKeyboard: true,
+          tabBarShowLabel: false,
+          headerShown: false,
+          tabBarStyle: {
+            height: 50,
+          },
+
+          tabBarIcon: ({ focused, size, colour }) => {
+            let iconName;
+            if (route.name === "Home") {
+              iconName = focused ? "home-sharp" : "home-outline";
+              size = focused ? size + 8 : size + 2;
+            } else if (route.name === "Search") {
+              iconName = focused ? "search" : "ios-search-outline";
+            } else if (route.name === "Reels") {
+              iconName = focused
+                ? "caret-forward-circle"
+                : "caret-forward-circle-outline";
+            } else if (route.name === "Activity") {
+              iconName = focused ? "ios-heart" : "ios-heart-outline";
+            } else if (route.name === "Profile") {
+              iconName = focused ? "ios-person-circle" : "ios-person-outline";
+            }
+
+            return <Ionic name={iconName} size={size} color={colour} />;
+          },
+        })}
+      >
+        <Tab.Screen name="Home" component={Home} />
+        <Tab.Screen name="Search" component={Search} />
+        <Tab.Screen name="Reels" component={Reels} />
+        <Tab.Screen name="Activity" component={Activity} />
+        <Tab.Screen name="Profile" component={Profile} />
+      </Tab.Navigator>
+    );
+  };
+
   return (
-    <View style={styles.container}>
-      {/* <OnbordingPage1 /> */}
-      {/* <OnbordingPage2 /> */}
-      <OnbordingPage3 />
-    </View>
-  )
-}
+    <NavigationContainer>
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
+        <Stack.Screen name="Bottom" component={bottomTabScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center'
-  }
-})
+export default App;

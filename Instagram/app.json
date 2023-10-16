@@ -25,6 +25,13 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "packagerOpts": {
+      "assetExts": ["ttf"]
+    },
+    "fonts": {
+      "Lobster-Regular": "./assets/fonts/Lobster-Regular.ttf"
     }
   }
 }
