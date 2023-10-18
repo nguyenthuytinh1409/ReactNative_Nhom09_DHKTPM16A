@@ -1,16 +1,18 @@
-import { View, Text, StatusBar } from "react-native";
+import { View, Text, StatusBar, ScrollView } from "react-native";
 import React from "react";
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
-import { ScrollView } from "react-native-web";
 import Stories from "../sreensComponents/Stories";
+import Post from "../sreensComponents/Post";
 
 const Home = () => {
   return (
-    <View style={{
-      backgroundColor: "white",
-      height: '100%',
-    }}> 
+    <View
+      style={{
+        backgroundColor: "white",
+        height: "100%",
+      }}
+    >
       <StatusBar backgroundColor="white" barStyle="dark-conent" />
       <View
         style={{
@@ -30,10 +32,11 @@ const Home = () => {
         >
           Instagram
         </Text>
-        <Feather name="navigation" style={{fontSize: 24}} />
+        <Feather name="navigation" style={{ fontSize: 24 }} />
       </View>
       <ScrollView>
-        <Stories></Stories>
+        <Stories />
+        <Post />
       </ScrollView>
     </View>
   );

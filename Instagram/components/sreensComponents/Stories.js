@@ -1,8 +1,11 @@
-import { View, Text, ScrollView, TouchableOpacity, Image } from "react-native";
 import React from "react";
+import { View, Text, ScrollView, TouchableOpacity, Image } from "react-native";
 import Entypo from "react-native-vector-icons/Entypo";
+import { useNavigation } from "@react-navigation/native";
 
 const Stories = () => {
+  const navigation = useNavigation();
+
   const storyInfo = [
     {
       id: 1,
@@ -24,17 +27,20 @@ const Stories = () => {
       name: "The_Groot",
       image: require("../../storage/images/profile3.jpg"),
     },
+    ,
     {
       id: 0,
-      name: "looverland",
+      name: "loverland",
       image: require("../../storage/images/profile4.jpg"),
     },
+    ,
     {
       id: 0,
-      name: "chillhouseran",
+      name: "chillhouse",
       image: require("../../storage/images/profile5.jpg"),
     },
   ];
+
   return (
     <ScrollView
       horizontal={true}
@@ -43,7 +49,15 @@ const Stories = () => {
     >
       {storyInfo.map((data, index) => {
         return (
-          <TouchableOpacity>
+          <TouchableOpacity
+            key={index}
+            onPress={() =>
+              navigation.push("Status", {
+                name: data.name,
+                image: data.image,
+              })
+            }
+          >
             <View
               style={{
                 flexDirection: "column",
@@ -64,8 +78,9 @@ const Stories = () => {
                     name="circle-with-plus"
                     style={{
                       fontSize: 20,
-                      Color: "#405de6",
+                      color: "#405de6",
                       backgroundColor: "white",
+                      borderRadius: 100,
                     }}
                   />
                 </View>
@@ -77,7 +92,7 @@ const Stories = () => {
                   backgroundColor: "white",
                   borderWidth: 1.8,
                   borderRadius: 100,
-                  borderBlockColor: "#c13584",
+                  borderColor: "#c13584",
                   justifyContent: "center",
                   alignItems: "center",
                 }}

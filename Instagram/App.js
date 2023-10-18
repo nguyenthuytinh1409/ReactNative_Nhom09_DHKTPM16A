@@ -8,6 +8,7 @@ import Reels from "./components/screens/Reels";
 import Activity from "./components/screens/Activity";
 import Profile from "./components/screens/Profile";
 import Ionic from "react-native-vector-icons/Ionicons";
+import Status from "./components/sreensComponents/Status";
 
 const App = () => {
   const Stack = createNativeStackNavigator();
@@ -41,7 +42,6 @@ const App = () => {
             } else if (route.name === "Profile") {
               iconName = focused ? "ios-person-circle" : "ios-person-outline";
             }
-
             return <Ionic name={iconName} size={size} color={colour} />;
           },
         })}
@@ -63,6 +63,7 @@ const App = () => {
         }}
       >
         <Stack.Screen name="Bottom" component={bottomTabScreen} />
+        <Stack.Screen name="Status" component={Status} />
       </Stack.Navigator>
     </NavigationContainer>
   );
