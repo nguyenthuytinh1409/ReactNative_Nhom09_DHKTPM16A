@@ -1,72 +1,95 @@
-import React from "react";
+import { StatusBar } from "expo-status-bar";
+import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Home from "./components/screens/Home";
-import Search from "./components/screens/Search";
-import Reels from "./components/screens/Reels";
-import Activity from "./components/screens/Activity";
-import Profile from "./components/screens/Profile";
-import Ionic from "react-native-vector-icons/Ionicons";
-import Status from "./components/sreensComponents/Status";
 
-const App = () => {
-  const Stack = createNativeStackNavigator();
+import React, { Component } from "react";
 
-  const Tab = createBottomTabNavigator();
+import { Text, View } from "react-native";
 
-  const bottomTabScreen = () => {
-    return (
-      <Tab.Navigator
-        screenOptions={({ route }) => ({
-          tabBarHideOnKeyboard: true,
-          tabBarShowLabel: false,
-          headerShown: false,
-          tabBarStyle: {
-            height: 50,
-          },
+import { Provider } from "react-redux";
+import { createStore, applyMiddleware } from "redux";
+import rootReducer from "./redux/reducers";
+import thunk from "redux-thunk";
+const store = createStore(rootReducer, applyMiddleware(thunk));
 
-          tabBarIcon: ({ focused, size, colour }) => {
-            let iconName;
-            if (route.name === "Home") {
-              iconName = focused ? "home-sharp" : "home-outline";
-              size = focused ? size + 8 : size + 2;
-            } else if (route.name === "Search") {
-              iconName = focused ? "search" : "ios-search-outline";
-            } else if (route.name === "Reels") {
-              iconName = focused
-                ? "caret-forward-circle"
-                : "caret-forward-circle-outline";
-            } else if (route.name === "Activity") {
-              iconName = focused ? "ios-heart" : "ios-heart-outline";
-            } else if (route.name === "Profile") {
-              iconName = focused ? "ios-person-circle" : "ios-person-outline";
-            }
-            return <Ionic name={iconName} size={size} color={colour} />;
-          },
-        })}
-      >
-        <Tab.Screen name="Home" component={Home} />
-        <Tab.Screen name="Search" component={Search} />
-        <Tab.Screen name="Reels" component={Reels} />
-        <Tab.Screen name="Activity" component={Activity} />
-        <Tab.Screen name="Profile" component={Profile} />
-      </Tab.Navigator>
-    );
-  };
-
-  return (
-    <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
-        <Stack.Screen name="Bottom" component={bottomTabScreen} />
-        <Stack.Screen name="Status" component={Status} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import "firebase/compat/firestore";
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyC4EbiwOjpEA3G3gVCV7mRpzU8GrB2yDmY",
+  authDomain: "instagram-dev-a2c0f.firebaseapp.com",
+  projectId: "instagram-dev-a2c0f",
+  storageBucket: "instagram-dev-a2c0f.appspot.com",
+  messagingSenderId: "984071044665",
+  appId: "1:984071044665:web:18b3a722dc08c876ffd7e8",
+  measurementId: "G-LM1GKWRTMH",
 };
+if (firebase.apps.length === 0) {
+  firebase.initializeApp(firebaseConfig);
+}
+
+import LandingScreen from "./components/auth/Landing";
+import RegisterSceen from "./components/auth/Register";
+import MainScreen from "./components/Main";
+
+const Stack = createNativeStackNavigator();
+
+export class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      loaded: false,
+    };
+  }
+
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (!user) {
+        this.setState({
+          loggedIn: false,
+          loaded: true,
+        });
+      } else {
+        this.setState({
+          loggedIn: true,
+          loaded: true,
+        });
+      }
+    });
+  }
+
+  render() {
+    const { loggedIn, loaded } = this.state;
+    if (!loaded) {
+      return (
+        <View style={{ flex: 1, justifyContent: "center" }}>
+          <Text>Loading</Text>
+        </View>
+      );
+    }
+
+    if (!loggedIn) {
+      return (
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="Landing">
+            <Stack.Screen
+              name="Landing"
+              component={LandingScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen name="Register" component={RegisterSceen} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      );
+    }
+    return (
+      <Provider store={store}>
+        <MainScreen />
+      </Provider>
+    );
+  }
+}
 
 export default App;
