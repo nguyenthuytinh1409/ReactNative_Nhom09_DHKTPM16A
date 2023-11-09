@@ -1,52 +1,49 @@
-import React, { Component } from "react";
-import { View, Button, TextInput } from "react-native";
+import React, { useState } from "react";
+import { View, Button, TextInput, Text } from "react-native";
+import { container, form } from '../styles';
 
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
 
-export class Login extends Component {
-  constructor(props) {
-    super(props);
+export default function Login(props) {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-    this.state = {
-      email: "",
-      password: "",      
-    };
-
-    this.onSignUp = this.onSignUp.bind(this);
+  const onSignUp = () => {
+      firebase.auth().signInWithEmailAndPassword(email, password)
   }
 
-  onSignUp() {
-    const { email, password } = this.state;
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password)
-      .then((result) => {
-        console.log(result);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
+  return (
+      <View style={container.center}>
+          <View style={container.formCenter}>
+              <TextInput
+                  style={form.textInput}
+                  placeholder="email"
+                  onChangeText={(email) => setEmail(email)}
+              />
+              <TextInput
+                  style={form.textInput}
+                  placeholder="password"
+                  secureTextEntry={true}
+                  onChangeText={(password) => setPassword(password)}
+              />
 
-  render() {
-    return (
-      <View>        
-        <TextInput
-          placeholder="email"
-          onChangeText={(email) => this.setState({ email })}
-        />
-        <TextInput
-          placeholder="password"
-          secureTextEntry={true}
-          onChangeText={(password) => this.setState({ password })}
-        />
+              <Button
+                  style={form.button}
+                  onPress={() => onSignUp()}
+                  title="Sign In"
+              />
+          </View>
 
-        <Button onPress={() => this.onSignUp()} title="Sign In" />
+
+          <View style={form.bottomButton} >
+              <Text
+                  title="Register"
+                  onPress={() => props.navigation.navigate("Register")} >
+                  Don't have an account? SignUp.
+              </Text>
+          </View>
       </View>
-    );
-  }
+  )
 }
-
-export default Login;
