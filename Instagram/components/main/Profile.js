@@ -49,9 +49,8 @@ function Profile(props) {
     }
     if (props.following.indexOf(props.route.params.uid) > -1) {
       setFollowing(true);
-    }
-    else{
-      setFollowing
+    } else {
+      setFollowing(false);
     }
   }, [props.route.params.uid, props.following]);
 
@@ -63,7 +62,7 @@ function Profile(props) {
       .collection("userFollowing")
       .doc(props.route.params.uid)
       .set({});
-  }
+  };
   const onUnfollow = () => {
     firebase
       .firestore()
@@ -72,7 +71,11 @@ function Profile(props) {
       .collection("userFollowing")
       .doc(props.route.params.uid)
       .delete();
-  }
+  };
+
+  const onLogout = () => {
+    firebase.auth().signOut();
+  };
   if (user === null) {
     return <View />;
   }
@@ -91,7 +94,9 @@ function Profile(props) {
               <Button title="Follow" onPress={() => onFollow()} />
             )}
           </View>
-        ) : null}
+        ) : (
+          <Button title="Logout" onPress={() => onLogout()} />
+        )}
       </View>
       <View styles={styles.containerGallery}>
         <FlatList

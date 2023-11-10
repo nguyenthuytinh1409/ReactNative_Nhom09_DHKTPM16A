@@ -8,7 +8,7 @@ import "firebase/compat/firestore";
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { fetchUser, fetchUserPosts, fetchUserFollowing } from "../redux/actions/index";
+import { fetchUser, fetchUserPosts, fetchUserFollowing, clearData } from "../redux/actions/index";
 
 import FeedScreen from "./main/Feed";
 import ProfileScreen from "./main/Profile";
@@ -22,6 +22,7 @@ const EmptyScreen = () => {
 
 export class Main extends Component {
   componentDidMount() {
+    this.props.clearData();
     this.props.fetchUser();
     this.props.fetchUserPosts();
     this.props.fetchUserFollowing();
@@ -86,7 +87,7 @@ export class Main extends Component {
                 size={26}
               />
             ),
-          }}
+          }}          
         />
       </Tab.Navigator>
     );
@@ -98,6 +99,6 @@ const mapStateToProps = (store) => ({
 });
 
 const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ fetchUser, fetchUserPosts, fetchUserFollowing }, dispatch);
+  bindActionCreators({ fetchUser, fetchUserPosts, fetchUserFollowing, clearData }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);
