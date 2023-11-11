@@ -11,22 +11,40 @@ function Feed(props) {
 
   useEffect(() => {
     let posts = [];
-    if (props.usersFollowingLoaded == props.following.length) {
-      for (let i = 0; i < props.following.length; i++) {
-        const user = props.users.find((el) => el.uid === props.following[i]);
-        if (user != undefined) {
-          posts = [...posts, ...user.posts];
-        }
-      }
-
-      posts.sort(function (x, y) {
+    if (props.usersFollowingLoaded == props.following.length && props.following.length !== 0) {
+        
+      props.feed.sort(function (x, y) {
         return x.creation - y.creation;
       });
 
-      setPosts(posts);
+      setPosts(props.feed);
     }
-  }, [props.usersFollowingLoaded]);
+    console.log(posts);
+  }, [props.usersFollowingLoaded, props.feed]);
 
+  const onLikePress = (userId, postId) => {
+    firebase
+      .firestore()
+      .collection("posts")
+      .doc(userId)
+      .collection("userPosts")
+      .doc(postId)
+      .collection("likes")
+      .doc(firebase.auth().currentUser.uid)
+      .set({});
+  }
+
+  const onDislikePress = (userId, postId) => {
+    firebase
+      .firestore()
+      .collection("posts")
+      .doc(userId)
+      .collection("userPosts")
+      .doc(postId)
+      .collection("likes")
+      .doc(firebase.auth().currentUser.uid)
+      .delete()
+  }
 
   return (
     <View styles={styles.container}>
@@ -39,6 +57,17 @@ function Feed(props) {
             <View style={styles.containerImage}>
               <Text style={styles.container}>{item.user.name}</Text>
               <Image style={styles.image} source={{ uri: item.downloadURL }} />
+              {item.currentUserLike ? (
+                <Button
+                  title="Dislike"
+                  onPress={() => onDislikePress(item.user.uid, item.id)}
+                />
+              ) : (
+                <Button
+                  title="Like"
+                  onPress={() => onLikePress(item.user.uid, item.id)}
+                />
+              )}
               <Text 
               onPress={() => props.navigation.navigate('Comment', { postId: item.id, uid: item.user.uid})}
               >View comments...</Text>
@@ -72,7 +101,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = (store) => ({
   currentUser: store.userState.currentUser,
   following: store.userState.following,
-  users: store.usersState.users,
+  feed: store.usersState.feed,
   usersFollowingLoaded: store.usersState.usersFollowingLoaded,
 });
 
