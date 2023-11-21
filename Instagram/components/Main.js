@@ -1,33 +1,36 @@
-import React, { Component } from "react";
-import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import React, { Component } from 'react'
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
-import firebase from "firebase/compat/app";
-import "firebase/compat/auth";
-import "firebase/compat/firestore";
+import firebase from 'firebase/compat/app'
+import 'firebase/compat/auth'
+import 'firebase/compat/firestore'
 
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import { fetchUser, fetchUserPosts, fetchUserFollowing, clearData } from "../redux/actions/index";
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import {
+  fetchUser,
+  fetchUserPosts,
+  fetchUserFollowing,
+  clearData
+} from '../redux/actions/index'
 
-import FeedScreen from "./main/Feed";
-import ProfileScreen from "./main/Profile";
-import SearchScreen from "./main/Search";
+import FeedScreen from './main/Feed'
+import ProfileScreen from './main/Profile'
+import SearchScreen from './main/Search'
 
-const Tab = createMaterialBottomTabNavigator();
+const Tab = createMaterialBottomTabNavigator()
 
 const EmptyScreen = () => {
-  return (null);
+  return null
 }
 
 export class Main extends Component {
   componentDidMount() {
-    this.props.clearData();
-    this.props.fetchUser();
-    this.props.fetchUserPosts();
-    this.props.fetchUserFollowing();
-
-
+    this.props.clearData()
+    this.props.fetchUser()
+    this.props.fetchUserPosts()
+    this.props.fetchUserFollowing()
   }
   render() {
     return (
@@ -39,7 +42,7 @@ export class Main extends Component {
             headerShown: false,
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons name="home" color={color} size={26} />
-            ),
+            )
           }}
         />
         <Tab.Screen
@@ -50,7 +53,7 @@ export class Main extends Component {
             headerShown: false,
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons name="magnify" color={color} size={26} />
-            ),
+            )
           }}
         />
         <Tab.Screen
@@ -58,15 +61,15 @@ export class Main extends Component {
           component={EmptyScreen}
           listeners={({ navigation }) => ({
             tabPress: (event) => {
-              event.preventDefault();
-              navigation.navigate("Add");
-            },
+              event.preventDefault()
+              navigation.navigate('Add')
+            }
           })}
           options={{
             headerShown: false,
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons name="plus-box" color={color} size={26} />
-            ),
+            )
           }}
         />
         <Tab.Screen
@@ -74,9 +77,11 @@ export class Main extends Component {
           component={ProfileScreen}
           listeners={({ navigation }) => ({
             tabPress: (event) => {
-              event.preventDefault();
-              navigation.navigate("Profile", {uid: firebase.auth().currentUser.uid});
-            },
+              event.preventDefault()
+              navigation.navigate('Profile', {
+                uid: firebase.auth().currentUser.uid
+              })
+            }
           })}
           options={{
             headerShown: false,
@@ -86,19 +91,22 @@ export class Main extends Component {
                 color={color}
                 size={26}
               />
-            ),
-          }}          
+            )
+          }}
         />
       </Tab.Navigator>
-    );
+    )
   }
 }
 
 const mapStateToProps = (store) => ({
-  currentUser: store.userState.currentUser,
-});
+  currentUser: store.userState.currentUser
+})
 
 const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ fetchUser, fetchUserPosts, fetchUserFollowing, clearData }, dispatch);
+  bindActionCreators(
+    { fetchUser, fetchUserPosts, fetchUserFollowing, clearData },
+    dispatch
+  )
 
-export default connect(mapStateToProps, mapDispatchToProps)(Main);
+export default connect(mapStateToProps, mapDispatchToProps)(Main)
