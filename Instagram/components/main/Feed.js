@@ -1,47 +1,49 @@
-import React, { useState, useEffect } from "react";
-import { StyleSheet, View, Text, Image, FlatList, Button } from "react-native";
-import { connect } from "react-redux";
+import React, { useState, useEffect } from 'react'
+import { StyleSheet, View, Text, Image, FlatList, Button } from 'react-native'
+import { connect } from 'react-redux'
 
-import firebase from "firebase/compat/app";
-import "firebase/compat/auth";
-import "firebase/compat/firestore";
+import firebase from 'firebase/compat/app'
+import 'firebase/compat/auth'
+import 'firebase/compat/firestore'
 
 function Feed(props) {
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState([])
 
   useEffect(() => {
-    let posts = [];
-    if (props.usersFollowingLoaded == props.following.length && props.following.length !== 0) {
-        
+    let posts = []
+    if (
+      props.usersFollowingLoaded == props.following.length &&
+      props.following.length !== 0
+    ) {
       props.feed.sort(function (x, y) {
-        return x.creation - y.creation;
-      });
+        return x.creation - y.creation
+      })
 
-      setPosts(props.feed);
+      setPosts(props.feed)
     }
-    console.log(posts);
-  }, [props.usersFollowingLoaded, props.feed]);
+    console.log(posts)
+  }, [props.usersFollowingLoaded, props.feed])
 
   const onLikePress = (userId, postId) => {
     firebase
       .firestore()
-      .collection("posts")
+      .collection('posts')
       .doc(userId)
-      .collection("userPosts")
+      .collection('userPosts')
       .doc(postId)
-      .collection("likes")
+      .collection('likes')
       .doc(firebase.auth().currentUser.uid)
-      .set({});
+      .set({})
   }
 
   const onDislikePress = (userId, postId) => {
     firebase
       .firestore()
-      .collection("posts")
+      .collection('posts')
       .doc(userId)
-      .collection("userPosts")
+      .collection('userPosts')
       .doc(postId)
-      .collection("likes")
+      .collection('likes')
       .doc(firebase.auth().currentUser.uid)
       .delete()
   }
@@ -68,42 +70,48 @@ function Feed(props) {
                   onPress={() => onLikePress(item.user.uid, item.id)}
                 />
               )}
-              <Text 
-              onPress={() => props.navigation.navigate('Comment', { postId: item.id, uid: item.user.uid})}
-              >View comments...</Text>
+              <Text
+                onPress={() =>
+                  props.navigation.navigate('Comment', {
+                    postId: item.id,
+                    uid: item.user.uid
+                  })
+                }
+              >
+                View comments...
+              </Text>
             </View>
           )}
         />
       </View>
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 1
   },
   containerInfo: {
-    margin: 20,
+    margin: 20
   },
   containerGallery: {
-    flex: 1,
+    flex: 1
   },
   containerImage: {
-    flex: 1 / 3,
+    flex: 1 / 3
   },
   image: {
     flex: 1,
-    aspectRatio: 1 / 1,
-  },
-});
+    aspectRatio: 1 / 1
+  }
+})
 
 const mapStateToProps = (store) => ({
   currentUser: store.userState.currentUser,
   following: store.userState.following,
   feed: store.usersState.feed,
-  usersFollowingLoaded: store.usersState.usersFollowingLoaded,
-});
+  usersFollowingLoaded: store.usersState.usersFollowingLoaded
+})
 
-export default connect(mapStateToProps, null)(Feed);
-
+export default connect(mapStateToProps, null)(Feed)
