@@ -20,7 +20,7 @@ export default function Login(props) {
         <Image style={styles.img} source={require('../../assets/insta.png')} />
         <TextInput
           style={form.textInput}
-          placeholder="Email, Name"
+          placeholder="Email"
           onChangeText={(email) => setEmail(email)}
         />
         <TextInput

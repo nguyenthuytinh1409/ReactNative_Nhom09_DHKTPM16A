@@ -9,7 +9,7 @@ import {
   ScrollView
 } from 'react-native'
 import { connect } from 'react-redux'
-import { ProfileBody, ProfileButtons } from './ProfileBody'
+import { ProfileBody, ProfileButtons } from '../auth/ProfileBody'
 import firebase from 'firebase/compat/app'
 import 'firebase/compat/auth'
 import 'firebase/compat/firestore'
