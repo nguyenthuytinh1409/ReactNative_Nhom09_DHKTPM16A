@@ -20,9 +20,9 @@ const SearchContent = (props) => {
       id: 1,
       images: [
         require('../../images/post4.jpg'),
-        require('../../images/post5.jpg'),
         require('../../images/post6.jpg'),
         require('../../images/post3.jpg'),
+        require('../../images/post2.jpg'),
         require('../../images/post2.jpg')
       ]
     },
@@ -30,6 +30,9 @@ const SearchContent = (props) => {
       id: 2,
       images: [
         require('../../images/post4.jpg'),
+        require('../../images/post3.jpg'),
+        require('../../images/post2.jpg'),
+        require('../../images/post6.jpg'),
         require('../../images/post3.jpg'),
         require('../../images/post2.jpg')
       ]

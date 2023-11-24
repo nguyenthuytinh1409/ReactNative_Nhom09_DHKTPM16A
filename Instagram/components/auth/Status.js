@@ -90,8 +90,8 @@ const Status = ({ route, navigation }) => {
               borderRadius: 100,
               backgroundColor: 'orange',
               resizeMode: 'cover',
-              width: '92%',
-              height: '92%'
+              width: '80%',
+              height: '80%'
             }}
           />
         </View>
@@ -115,7 +115,7 @@ const Status = ({ route, navigation }) => {
       </View>
       <Image
         source={image}
-        style={{ position: 'absolute', width: '100%', height: 600 }}
+        style={{ position: 'absolute', width: '100%', height: 500 }}
       />
       <View
         style={{

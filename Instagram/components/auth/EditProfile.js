@@ -1,19 +1,9 @@
 import React from 'react'
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  ToastAndroid,
-  Image,
-  TextInput
-} from 'react-native'
+import { View, Text, TouchableOpacity, Image, TextInput } from 'react-native'
 import Ionic from 'react-native-vector-icons/Ionicons'
 
 const EditProfile = ({ route, navigation }) => {
   const { name, accountName, profileImage } = route.params
-  const TostMessage = () => {
-    ToastAndroid.show('Edited Sucessfully !', ToastAndroid.SHORT)
-  }
   return (
     <View
       style={{
@@ -36,7 +26,6 @@ const EditProfile = ({ route, navigation }) => {
         <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Edit Profile</Text>
         <TouchableOpacity
           onPress={() => {
-            TostMessage()
             navigation.goBack()
           }}
         >

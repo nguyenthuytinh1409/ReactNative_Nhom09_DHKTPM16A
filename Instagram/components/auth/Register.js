@@ -1,5 +1,13 @@
 import React, { Component } from 'react'
-import { View, Button, TextInput, Image, StyleSheet } from 'react-native'
+import {
+  View,
+  Button,
+  TextInput,
+  Image,
+  StyleSheet,
+  Pressable,
+  Text
+} from 'react-native'
 
 import firebase from 'firebase/compat/app'
 import 'firebase/compat/auth'
@@ -64,7 +72,23 @@ export class Register extends Component {
             secureTextEntry={true}
             onChangeText={(password) => this.setState({ password })}
           />
-          <Button onPress={() => this.onSignUp()} title="Sign Up" />
+          <Pressable
+            title="Register"
+            style={{
+              marginTop: 20,
+              backgroundColor: '#0095f6',
+              borderRadius: 10,
+              padding: 10,
+              width: '90%',
+              height: 40,
+              alignItems: 'center',
+              justifyContent: 'center',
+              alignSelf: 'center'
+            }}
+            onPress={() => this.onSignUp()}
+          >
+            <Text style={{ color: 'white', fontSize: 25 }}>REGISTER</Text>
+          </Pressable>
         </View>
       </View>
     )

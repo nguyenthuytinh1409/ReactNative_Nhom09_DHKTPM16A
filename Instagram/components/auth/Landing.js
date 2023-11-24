@@ -7,8 +7,8 @@ export default function Landing({ navigation }) {
       <Image style={styles.img} source={require('../../assets/insta.png')} />
       <Text
         style={{
-          width: '90%',
-          fontSize: 13,
+          width: '100%',
+          fontSize: 18,
           marginTop: 20,
           textAlign: 'center',
           color: '#000'
@@ -19,9 +19,9 @@ export default function Landing({ navigation }) {
       <Pressable
         title="Register"
         style={{
-          marginTop: 10,
+          marginTop: 20,
           backgroundColor: '#0095f6',
-          borderRadius: 5,
+          borderRadius: 10,
           padding: 10,
           width: '90%',
           height: 40,
@@ -36,9 +36,9 @@ export default function Landing({ navigation }) {
       <Pressable
         title="Register"
         style={{
-          marginTop: 10,
+          marginTop: 20,
           backgroundColor: '#0095f6',
-          borderRadius: 5,
+          borderRadius: 10,
           padding: 10,
           width: '90%',
           height: 40,
