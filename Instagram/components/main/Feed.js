@@ -176,6 +176,15 @@ function Feed(props) {
               </View>
               <Feather name="bookmark" style={{ fontSize: 20 }} />
             </View>
+            <Text
+                style={{
+                  fontWeight: '700',
+                  fontSize: 14,
+                  paddingVertical: 2
+                }}
+              >
+                {item.caption}
+              </Text>
             <Text style={{ opacity: 0.4, paddingVertical: 2 }} 
             onPress={() => props.navigation.navigate('Comment', { postId: item.id, uid: item.user.uid})}>
                 View all comments
