@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import { StyleSheet, Text, View, Image } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
-export default function OnbordingPage3() {
+export default function OnbordingPage3(props) {
   return (
     <View style={styles.container}>
-      <Image style={styles.img} source={require('../assets/3.png')} />
+      {/* <Image style={styles.img} source={require('../assets/3.png')} /> */}
       <Text style={styles.text1}>
         Create, watch, and share short, entertaining videos called
       </Text>

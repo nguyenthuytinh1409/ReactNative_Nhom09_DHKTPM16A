@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import { StyleSheet, Text, View, Image } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
-export default function OnbordingPage2() {
+export default function OnbordingPage2(props) {
   return (
     <View style={styles.container}>
-      <Image style={styles.img} source={require('../assets/2.png')} />
+      {/* <Image style={styles.img} source={require('../assets/2.png')} /> */}
       <Text style={styles.text1}>
         You can share your Photos, Chat with your Friends & can Likes, Comments
         & go to Live.

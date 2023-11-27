@@ -40,6 +40,7 @@ import CommentScreen from './components/main/Comment'
 import EditProfile from './components/auth/EditProfile'
 import Status from './components/auth/Status'
 
+
 const Stack = createNativeStackNavigator()
 
 export class App extends Component {
@@ -87,6 +88,7 @@ export class App extends Component {
             />
             <Stack.Screen name="Register" component={RegisterSceen} />
             <Stack.Screen name="Login" component={LoginScreen} />
+            
           </Stack.Navigator>
         </NavigationContainer>
       )
@@ -104,7 +106,7 @@ export class App extends Component {
               name="Add"
               component={AddScreen}
               navigation={this.props.navigation}
-              options={{ headerShown: false }}
+              options={{ headerShown: true }}
             />
             <Stack.Screen
               name="Save"
@@ -116,7 +118,7 @@ export class App extends Component {
               name="Comment"
               component={CommentScreen}
               navigation={this.props.navigation}
-              options={{ headerShown: false }}
+              options={{ headerShown: true }}
             />
             <Stack.Screen
               name="Status"

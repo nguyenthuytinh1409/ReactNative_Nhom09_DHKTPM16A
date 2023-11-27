@@ -4,7 +4,7 @@ import { StatusBar } from 'expo-status-bar'
 export default function OnbordingPage1() {
   return (
     <View style={styles.container}>
-      <Image style={styles.img} source={require('../assets/1.png')} />
+      {/* <Image style={styles.img} source={require('../assets/1.png')} /> */}
       <Text style={styles.text1}>
         Give people the power to build community and bring the world closer
         together.
